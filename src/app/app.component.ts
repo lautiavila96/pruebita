@@ -5,7 +5,7 @@ import { ServiveService } from './servive.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers:[ServiveService]
+ 
 })
 export class AppComponent {
   title = 'PruebaSimpleFront';

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { SimpleObkect } from './simpleObject';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,21 +7,21 @@ import { Observable } from 'rxjs';
 })
 export class ServiveService {
 
-simpleObject!: SimpleObkect
+  constructor(private http: HttpClient) { }
 
-  constructor(private http:HttpClient) { }
   private API_CREATE: string = "http://localhost:8080/restful/services/simple.SimpleObjects/actions/create/invoke";
 
-  
-
-  
-
-  create(data:any):Observable<any>{
-    const headers = new HttpHeaders();
-
-    // const url = `${this.API_CREATE}`;
-    // return this.http.post(url,{ headers, responseType: 'text' as 'json' });
-    return this.http.post(this.API_CREATE,data, { headers, responseType: 'text' as 'json' });
+  // Función para crear cabeceras con autorización básica
+  createBasicAuthHeaders(username: string, password: string): HttpHeaders {
+    const base64Credentials = btoa(username + ":" + password);
+    return new HttpHeaders({
+      'Authorization': 'Basic ' + base64Credentials
+    });
   }
-  
+
+  create(data: any): Observable<any> {
+    const headers = this.createBasicAuthHeaders('sven', 'pass'); // Reemplaza con tus credenciales
+
+    return this.http.post(this.API_CREATE, data, { headers, responseType: 'text' as 'json' });
+  }
 }
